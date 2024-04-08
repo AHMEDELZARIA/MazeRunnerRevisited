@@ -61,7 +61,7 @@ public class Main {
             }
             case "dfs" -> {
                 logger.debug("dfs algorithm chosen.");
-                solver = new dfs();
+                solver = new Dfs();
             }
             default -> {
                 throw new Exception("Maze solving method '" + method + "' not supported.");

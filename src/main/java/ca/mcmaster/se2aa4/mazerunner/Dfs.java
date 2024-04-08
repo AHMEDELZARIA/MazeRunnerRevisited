@@ -1,17 +1,13 @@
 package ca.mcmaster.se2aa4.mazerunner;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Stack;
 import java.util.AbstractMap.SimpleEntry;
 
-public class dfs implements MazeSolver {
+public class Dfs implements MazeSolver {
     private Maze maze;
     private Path finalPath;
 

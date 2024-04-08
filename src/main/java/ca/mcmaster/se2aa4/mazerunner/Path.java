@@ -218,4 +218,14 @@ public class Path {
 
         return finalPath;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+        if (!(o instanceof Path)) { return false; }
+
+        Path path = (Path) o;
+
+        return getFactorizedForm().equals(path.getFactorizedForm());
+    }
 }
