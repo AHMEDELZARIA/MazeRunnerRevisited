@@ -126,4 +126,96 @@ public class Path {
 
         return sb.toString();
     }
+
+    public Path convert(List<Integer> path) {
+        Direction dir = Direction.RIGHT;
+        Path finalPath = new Path();
+        Integer current, next;
+        int results;
+
+        for (int i = 0; i < path.size(); i++) {
+            if (i == path.size() - 1) { break; }
+
+            current = path.get(i);
+            next = path.get(i + 1);
+            results = next - current;
+
+            switch (dir) {
+                case RIGHT:
+                    if (results == 1) {
+                        finalPath.addStep('F');
+                    } else if (results == -1) {
+                        dir = dir.turnLeft().turnLeft();
+                        finalPath.addStep('L');
+                        finalPath.addStep('L');
+                        finalPath.addStep('F');
+                    } else if (results > 1) {
+                        dir = dir.turnRight();
+                        finalPath.addStep('R');
+                        finalPath.addStep('F');
+                    } else {
+                        dir = dir.turnLeft();
+                        finalPath.addStep('L');
+                        finalPath.addStep('F');
+                    }
+                    break;
+                case LEFT:
+                    if (results == 1) {
+                        dir = dir.turnLeft().turnLeft();
+                        finalPath.addStep('L');
+                        finalPath.addStep('L');
+                        finalPath.addStep('F');
+                    } else if (results == -1) {
+                        finalPath.addStep('F');
+                    } else if (results > 1) {
+                        dir = dir.turnLeft();
+                        finalPath.addStep('L');
+                        finalPath.addStep('F');
+                    } else {
+                        dir = dir.turnRight();
+                        finalPath.addStep('R');
+                        finalPath.addStep('F');
+                    }
+                    break;
+                case UP:
+                    if (results == 1) {
+                        dir = dir.turnRight();
+                        finalPath.addStep('R');
+                        finalPath.addStep('F');
+                    } else if (results == -1) {
+                        dir = dir.turnLeft();
+                        finalPath.addStep('L');
+                        finalPath.addStep('F');
+                    } else if (results > 1) {
+                        dir = dir.turnLeft().turnLeft();
+                        finalPath.addStep('L');
+                        finalPath.addStep('L');
+                        finalPath.addStep('F');
+                    } else {
+                        finalPath.addStep('F');
+                    }
+                    break;
+                case DOWN:
+                    if (results == 1) {
+                        dir = dir.turnLeft();
+                        finalPath.addStep('L');
+                        finalPath.addStep('F');
+                    } else if (results == -1) {
+                        dir = dir.turnRight();
+                        finalPath.addStep('R');
+                        finalPath.addStep('F');
+                    } else if (results > 1) {
+                        finalPath.addStep('F');
+                    } else {
+                        dir = dir.turnLeft().turnLeft();
+                        finalPath.addStep('L');
+                        finalPath.addStep('L');
+                        finalPath.addStep('F');
+                    }
+                    break;
+            }
+        }
+
+        return finalPath;
+    }
 }

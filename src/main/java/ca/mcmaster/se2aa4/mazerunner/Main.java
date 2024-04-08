@@ -59,6 +59,10 @@ public class Main {
                 logger.debug("Tremaux algorithm chosen.");
                 solver = new TremauxSolver();
             }
+            case "dfs" -> {
+                logger.debug("dfs algorithm chosen.");
+                solver = new dfs();
+            }
             default -> {
                 throw new Exception("Maze solving method '" + method + "' not supported.");
             }
