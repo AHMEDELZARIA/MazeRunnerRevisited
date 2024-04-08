@@ -5,7 +5,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Main {
-
     private static final Logger logger = LogManager.getLogger();
 
     public static void main(String[] args) {
@@ -16,17 +15,46 @@ public class Main {
         try {
             cmd = parser.parse(getParserOptions(), args);
             String filePath = cmd.getOptionValue('i');
-            Maze maze = new Maze(filePath);
 
             if (cmd.getOptionValue("p") != null) {
                 logger.info("Validating path");
+                Maze maze = new Maze(filePath);
                 Path path = new Path(cmd.getOptionValue("p"));
                 if (maze.validatePath(path)) {
                     System.out.println("correct path");
                 } else {
                     System.out.println("incorrect path");
                 }
+            } else if (cmd.getOptionValue("baseline") != null) {
+                Benchmark bench = new Benchmark();
+                // Print time needed to generate maze
+                bench.startTimer();
+                Maze maze = new Maze(filePath);
+                bench.endTimer();
+                double mazeTime = bench.getElapsedTime();
+                System.out.println("Time taken to generate maze: " + mazeTime + "ms");
+
+                // Print time needed for method to compute path
+                String method = cmd.getOptionValue("method", "righthand");
+                bench.startTimer();
+                Path methodPath = solveMaze(method, maze);
+                bench.endTimer();
+                double methodTime = bench.getElapsedTime();
+                System.out.println("Time taken to compute maze via " + method + ": " + methodTime + "ms");
+
+                // Print time needed for baseline to compute path
+                String baseline = cmd.getOptionValue("baseline");
+                bench.startTimer();
+                Path baselinePath = solveMaze(baseline, maze);
+                bench.endTimer();
+                double baselineTime = bench.getElapsedTime();
+                System.out.println("Time taken to compute maze via " + baseline + ": " + baselineTime + "ms");
+
+                // Print speedup of baseline over method
+                double speedup = bench.calcSpeedUp(baselinePath, methodPath);
+                System.out.println("Speedup: " + speedup);
             } else {
+                Maze maze = new Maze(filePath);
                 String method = cmd.getOptionValue("method", "righthand");
                 Path path = solveMaze(method, maze);
                 System.out.println(path.getFactorizedForm());
@@ -48,7 +76,7 @@ public class Main {
      * @return Maze solution path
      * @throws Exception If provided method does not exist
      */
-    private static Path solveMaze(String method, Maze maze) throws Exception {
+    public static Path solveMaze(String method, Maze maze) throws Exception {
         MazeSolver solver = null;
         switch (method) {
             case "righthand" -> {
@@ -86,6 +114,7 @@ public class Main {
 
         options.addOption(new Option("p", true, "Path to be verified in maze"));
         options.addOption(new Option("method", true, "Specify which path computation algorithm will be used"));
+        options.addOption(new Option("baseline", true, "Specify the path computation algorithm to compare with -method"));
 
         return options;
     }
