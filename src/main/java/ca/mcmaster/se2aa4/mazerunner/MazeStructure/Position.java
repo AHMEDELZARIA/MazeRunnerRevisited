@@ -1,4 +1,4 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.MazeStructure;
 
 public record Position(int x, int y) {
     /**

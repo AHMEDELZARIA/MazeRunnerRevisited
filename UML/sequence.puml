@@ -1,0 +1,74 @@
+@startuml
+
+autoactivate on
+
+participant "_: Main" as Main
+participant "opts: Options" as Options
+participant "maze: Maze" as Maze
+participant "solver: MazeSolver" as MazeSolver
+participant "parser: CommandLineParser" as CommandLineParser
+participant "cmd: CommandLine" as CommandLine
+participant "bench: Benchmark" as Benchmark
+
+[-> Main: main(args)
+    create CommandLineParser
+        Main -> CommandLineParser: this()
+        return parser
+    Main -> CommandLineParser: parse(getParserOptions(), args)
+    create CommandLine
+        create Options
+            CommandLineParser -> Options: this()
+            Options -> Options: addOptions(i, p, method, baseline)
+            create Option
+                Options -> Option: this()
+            return option i, p, method, baseline
+        return i, p, method, baseline added
+        return parserOptions
+        CommandLineParser -> CommandLine: this(parserOptions, args)
+        return
+    return cmd
+    Main -> CommandLine: getOptionValues(p, baseline)
+    CommandLine --> Main: Option p and baseline
+    alt Option p is present
+        create Maze
+            Main -> Maze: this(filePath)
+        return maze
+        create Path
+            Main -> Path: this(Option p value)
+        return path
+        alt path is correct
+            Main -> Main: Print out "correct"
+        else path is incorrect
+            Main -> Main: Print out "incorrect"
+        end
+    else Option p is not present, but baseline is
+        create Benchmark
+            Main -> Benchmark: this()
+        return bench
+        Main -> Benchmark: startTimer()
+        create MazeSolver
+            Main -> MazeSolver: this()
+            return MazeSolver for method and baseline
+        Main -> MazeSolver: solveMaze()
+        MazeSolver -> MazeSolver: solve()
+        MazeSolver --> Main: path to maze
+        Main -> Benchmark: endTimer()
+        Main -> Benchmark: getElapsedTime()
+        Benchmark -> Benchmark: ConvertNanoToMilli(elapsed)
+        Benchmark --> Main: Time taken to complete maze creation, method, and baseline
+        Main -> Main: Print out benchmarks
+    else default
+        create Maze
+            Main -> Maze: this(filePath)
+        return maze
+        Main -> CommandLine: getOptionValue(method)
+        CommandLine --> Main: option method
+        create MazeSolver
+            Main -> MazeSolver: this()
+            return MazeSolver for method and baseline
+        Main -> MazeSolver: solveMaze()
+        MazeSolver -> MazeSolver: solve()
+        MazeSolver --> Main: path to maze
+        Main -> Main: Print out path for maze
+    end
+@enduml

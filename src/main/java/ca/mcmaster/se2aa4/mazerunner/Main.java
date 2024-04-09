@@ -1,5 +1,11 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import ca.mcmaster.se2aa4.mazerunner.MazeStructure.Maze;
+import ca.mcmaster.se2aa4.mazerunner.MazeStructure.Path;
+import ca.mcmaster.se2aa4.mazerunner.SolvingMaze.DfsSolver;
+import ca.mcmaster.se2aa4.mazerunner.SolvingMaze.MazeSolver;
+import ca.mcmaster.se2aa4.mazerunner.SolvingMaze.RightHandSolver;
+import ca.mcmaster.se2aa4.mazerunner.SolvingMaze.TremauxSolver;
 import org.apache.commons.cli.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -89,7 +95,7 @@ public class Main {
             }
             case "dfs" -> {
                 logger.debug("dfs algorithm chosen.");
-                solver = new Dfs();
+                solver = new DfsSolver();
             }
             default -> {
                 throw new Exception("Maze solving method '" + method + "' not supported.");

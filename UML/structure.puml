@@ -1,0 +1,94 @@
+@startuml structure
+
+class Benchmark {
+    -start: int
+    -elapsed: int
+    -timerOn: boolean
+
+    +this(): Benchmark
+    +startTimer()
+    +endTimer()
+    +getElapsedTime(): double
+    +calcSpeedUp(bPath: Path, mPath: Path): double
+}
+class Main {
+    {static} +main(args: String[])
+    {static} +solveMaze(method: String, maze: Maze): Path
+    {static} -getParserOptions(): Options
+}
+
+package MazeStructure {
+    enum Direction {
+        +UP
+        +DOWN
+        +LEFT
+        +RIGHT
+        +turnRight(): Direction
+        +turnLeft(): Direction
+    }
+    class Maze {
+        -maze: List<List<Boolean>>
+        -start: Position
+        -end: Position
+
+        +this(filePath: String): Maze
+        +isWall(pos: Position): Boolean
+        +getStart(): Position
+        +getEnd(): Position
+        +getSizeX(): int
+        +getSizeY(): int
+        +validatePath(path: Path): Boolean
+    }
+    class Position <<record>> {
+        +x: int
+        +y: int
+
+        +add(other: Position): Position
+        +move(direction: Direction): Position
+    }
+    class Path {
+        -path: List<Character>
+
+        +this(pathStr: String): Path
+        +expandFactorizedStringPath(path: String): String
+        +getPathSteps(): List<Character>
+        +addStep(step: Character)
+        +getCanonicalForm(): String
+        +getFactorizedForm(): String
+        +convert(path: List<Integer>): Path
+    }
+}
+package SolvingMaze {
+    interface Graph {
+        +getValue(nodeIndex: Integer): List<Integer>
+        +getStartNodeIndex(): Integer
+        +getEndNodeIndex(): Integer
+    }
+    interface MazeSolver {
+        +solve(maze: Maze): Path
+    }
+    class AdjacencyList
+    class RightHandSolver
+    class TremauxSolver
+    class DfsSolver {
+        +solve(maze: Maze): Path ^
+        -search(): List<Integer>
+    }
+}
+
+
+' Relationships
+Main --> MazeSolver
+Main --> Maze
+Main --> Benchmark
+RightHandSolver ..|> MazeSolver
+TremauxSolver ..|> MazeSolver
+DfsSolver ..|> MazeSolver
+DfsSolver --> Graph
+AdjacencyList ..|> Graph
+Maze --> Position
+Maze --> Path
+Position --> Direction
+Path --> Direction
+
+@enduml

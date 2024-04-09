@@ -1,10 +1,14 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import ca.mcmaster.se2aa4.mazerunner.MazeStructure.Maze;
+import ca.mcmaster.se2aa4.mazerunner.MazeStructure.Path;
+import ca.mcmaster.se2aa4.mazerunner.SolvingMaze.DfsSolver;
+import ca.mcmaster.se2aa4.mazerunner.SolvingMaze.MazeSolver;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DfsTest {
-    private final MazeSolver mazeSolver = new Dfs();
+    private final MazeSolver mazeSolver = new DfsSolver();
     private Maze maze;
 
     @Test

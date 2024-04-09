@@ -1,4 +1,7 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.SolvingMaze;
+
+import ca.mcmaster.se2aa4.mazerunner.MazeStructure.Maze;
+import ca.mcmaster.se2aa4.mazerunner.MazeStructure.Path;
 
 import java.util.List;
 import java.util.Set;
@@ -7,7 +10,7 @@ import java.util.HashSet;
 import java.util.Stack;
 import java.util.AbstractMap.SimpleEntry;
 
-public class Dfs implements MazeSolver {
+public class DfsSolver implements MazeSolver {
     private Maze maze;
     private Path finalPath;
 
@@ -16,6 +19,9 @@ public class Dfs implements MazeSolver {
         this.maze = maze;
         this.finalPath = new Path();
         Graph graph = new AdjacencyList(this.maze);
+        graph.printGraph();
+        System.out.println(graph.getStartNodeIndex());
+        System.out.println(graph.getEndNodeIndex());
         List<Integer> path = search(graph, graph.getStartNodeIndex(), graph.getEndNodeIndex());
         return finalPath.convert(path);
     }

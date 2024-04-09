@@ -1,4 +1,7 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.SolvingMaze;
+
+import ca.mcmaster.se2aa4.mazerunner.MazeStructure.Maze;
+import ca.mcmaster.se2aa4.mazerunner.MazeStructure.Position;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,11 +60,19 @@ public class AdjacencyList implements Graph {
 
             if (((0 <= nx) && (nx < this.maze.getSizeX())) && ((0 <= ny) && (ny < this.maze.getSizeY()))) {
                 if (!this.maze.isWall(new Position(nx, ny))) {
-                    neighbours.add(this.maze.getSizeY() * ny + nx);
+                    neighbours.add(this.maze.getSizeX() * ny + nx);
                 }
             }
         }
 
         return neighbours;
+    }
+
+    public void printGraph() {
+        for (Map.Entry<Integer, List<Integer>> entry : adjacencyList.entrySet()) {
+            Integer key = entry.getKey();
+            List<Integer> value = entry.getValue();
+            System.out.println(key + " -> " + value);
+        }
     }
 }

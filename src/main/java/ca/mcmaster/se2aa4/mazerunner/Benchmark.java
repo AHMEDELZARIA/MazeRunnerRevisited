@@ -1,5 +1,7 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import ca.mcmaster.se2aa4.mazerunner.MazeStructure.Path;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
