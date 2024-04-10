@@ -127,6 +127,12 @@ public class Path {
         return sb.toString();
     }
 
+    /**
+     * Converts a graph path of nodes to a canonical path form
+     *
+     * @param path from start node to end node
+     * @return Canonical path
+     */
     public Path convert(List<Integer> path) {
         Direction dir = Direction.RIGHT;
         Path finalPath = new Path();

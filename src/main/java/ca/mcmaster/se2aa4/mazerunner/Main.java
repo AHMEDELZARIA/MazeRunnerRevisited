@@ -22,6 +22,7 @@ public class Main {
             cmd = parser.parse(getParserOptions(), args);
             String filePath = cmd.getOptionValue('i');
 
+            // If -p is specified by user
             if (cmd.getOptionValue("p") != null) {
                 logger.info("Validating path");
                 Maze maze = new Maze(filePath);
@@ -31,6 +32,8 @@ public class Main {
                 } else {
                     System.out.println("incorrect path");
                 }
+
+            // If -baseline is specified by user
             } else if (cmd.getOptionValue("baseline") != null) {
                 Benchmark bench = new Benchmark();
                 // Print time needed to generate maze
@@ -59,13 +62,17 @@ public class Main {
                 // Print speedup of baseline over method
                 double speedup = bench.calcSpeedUp(baselinePath, methodPath);
                 System.out.println("Speedup: " + speedup);
+
+            // default behavior
             } else {
                 Maze maze = new Maze(filePath);
                 String method = cmd.getOptionValue("method", "righthand");
                 Path path = solveMaze(method, maze);
                 System.out.println(path.getFactorizedForm());
             }
+
         } catch (Exception e) {
+            // Handle exceptions and errors
             System.err.println("MazeSolver failed.  Reason: " + e.getMessage());
             logger.error("MazeSolver failed.  Reason: " + e.getMessage());
             logger.error("PATH NOT COMPUTED");

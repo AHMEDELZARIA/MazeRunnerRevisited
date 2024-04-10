@@ -11,28 +11,33 @@ import java.util.Stack;
 import java.util.AbstractMap.SimpleEntry;
 
 public class DfsSolver implements MazeSolver {
-    private Maze maze;
-    private Path finalPath;
 
     @Override
     public Path solve(Maze maze) {
-        this.maze = maze;
-        this.finalPath = new Path();
-        Graph graph = new AdjacencyList(this.maze);
-        graph.printGraph();
-        System.out.println(graph.getStartNodeIndex());
-        System.out.println(graph.getEndNodeIndex());
+        Path finalPath = new Path();
+        Graph graph = new AdjacencyList(maze);
         List<Integer> path = search(graph, graph.getStartNodeIndex(), graph.getEndNodeIndex());
         return finalPath.convert(path);
     }
 
+    /**
+     * Performs a depth-first search finding the shortest path in a graph from a
+     * specified start to end node
+     *
+     * @param graph Graph to search
+     * @param start Start node
+     * @param end End node
+     * @return Shortest path in graph from start to end
+     */
     private List<Integer> search(Graph graph, Integer start, Integer end) {
+        // Initial a stack with entries [node, [path]]
         List<Integer> startPath = new ArrayList<>();
         startPath.add(start);
         SimpleEntry<Integer, List<Integer>> entry = new SimpleEntry<>(start, startPath);
         Stack<SimpleEntry<Integer, List<Integer>>> stack = new Stack<>();
         stack.push(entry);
 
+        // Keep a track of visited nodes to avoid revisiting them
         Set<Integer> visited = new HashSet<>();
 
         while (!stack.isEmpty()) {

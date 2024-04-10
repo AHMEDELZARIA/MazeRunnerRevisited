@@ -32,6 +32,20 @@ public class AdjacencyList implements Graph {
         return (this.maze.getEnd().y() + 1) * this.maze.getSizeX() - 1;
     }
 
+    @Override
+    public void printGraph() {
+        for (Map.Entry<Integer, List<Integer>> entry : adjacencyList.entrySet()) {
+            Integer key = entry.getKey();
+            List<Integer> value = entry.getValue();
+            System.out.println(key + " -> " + value);
+        }
+    }
+
+    /**
+     * Builds a graph corresponding to a maze
+     *
+     * @return map holding the adjacency list of the graph
+     */
     private Map<Integer, List<Integer>> buildGraph() {
         Map<Integer, List<Integer>> graph = new HashMap<>();
         Integer cell_index = -1;
@@ -48,6 +62,13 @@ public class AdjacencyList implements Graph {
         return graph;
     }
 
+    /**
+     * Gets the neighbors adjacent to a cell in the maze
+     *
+     * @param row of the cell
+     * @param col of the cell
+     * @return List of cell indices corresponding to the neighbors
+     */
     private List<Integer> getNeighbours(int row, int col) {
         List<Integer> neighbours = new ArrayList<>();
         int[][] directions = { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } };
@@ -66,13 +87,5 @@ public class AdjacencyList implements Graph {
         }
 
         return neighbours;
-    }
-
-    public void printGraph() {
-        for (Map.Entry<Integer, List<Integer>> entry : adjacencyList.entrySet()) {
-            Integer key = entry.getKey();
-            List<Integer> value = entry.getValue();
-            System.out.println(key + " -> " + value);
-        }
     }
 }
