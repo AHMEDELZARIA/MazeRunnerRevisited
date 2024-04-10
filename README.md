@@ -1,6 +1,7 @@
-# Assignment A1 - Maze Runner
+# Assignment A3 - Maze Runner Take 2
 
-* **Student**: [FIRSTNAME LASTNAME](MACID@mcmaster.ca)
+* **Student**: [Ahmed Elzaria](elzariaa@mcmaster.ca)
+  * Author: Alexandre Lachance
 * **Program**: B. Eng. In Software Engineering
 * **Course code**: SFWRENG 2AA4
 * **Course Title**: Software Design I - Introduction to Software Development
@@ -24,90 +25,70 @@ This program explores a maze, finding a path from an entry point to an exit one.
 - A canonical path contains only `F`, `R` and `L` symbols
 - A factorized path squashes together similar instructions (i.e., `FFF` = `3F`, `LL` = `2L`).
 - Spaces are ignored in the instruction sequence (only for readability: `FFLFF` = `FF L FF`)
-- The program takes as input a maze and print the path on the standard output.
-    - For this assignment, the path does not have to be the shortest one.
+- The program takes as input a maze and print the path on the standard output. 
+  - User can specify which path computation method they want to use
+  - Shortest path is displayed if the `dfs` algorithm is chosen
 - The program can take a path as input and verify if it's a legit one.
+- The program can compare the results of 2 algorithms
+  - Time taken to generate maze is shown
+  - Time taken to compute maze via both algorithms is shown
+  - Speedup = |Algorithm1 Path| / |Algorithm2 Path| is shown
 
 ## How to run this software?
 
 To build the program, simply package it with Maven:
 
 ```
-mosser@azrael A1-Template % mvn -q clean package 
-```
-
-### Provided version (starter code)
-
-The starter code assumes the maze file name is the first argument.
-
-```
-mosser@azrael A1-Template % java -jar target/mazerunner.jar ./examples/small.maz.txt
-** Starting Maze Runner
-**** Reading the maze from file ./examples/small.maz.txt
-WALL WALL WALL WALL WALL WALL WALL WALL WALL WALL WALL 
-WALL PASS PASS PASS PASS PASS PASS PASS PASS PASS WALL 
-WALL WALL WALL PASS WALL WALL WALL PASS WALL WALL WALL 
-WALL PASS PASS PASS PASS PASS WALL PASS PASS PASS WALL 
-WALL PASS WALL PASS WALL WALL WALL WALL WALL PASS WALL 
-WALL PASS WALL PASS PASS PASS PASS PASS WALL PASS PASS 
-WALL WALL WALL PASS WALL PASS WALL WALL WALL WALL WALL 
-WALL PASS PASS PASS WALL PASS PASS PASS PASS PASS WALL 
-PASS PASS WALL PASS WALL PASS WALL WALL WALL PASS WALL 
-WALL PASS WALL PASS WALL PASS WALL PASS PASS PASS WALL 
-WALL WALL WALL WALL WALL WALL WALL WALL WALL WALL WALL 
-**** Computing path
-PATH NOT COMPUTED
-** End of MazeRunner
-```
-
-When called on a non-existing file. it prints an error message
-
-```
-mosser@azrael A1-Template % java -jar target/mazerunner.jar ./examples/small.maz.txtd
-** Starting Maze Runner
-**** Reading the maze from file ./examples/small.maz.txtd
-/!\ An error has occured /!\
-**** Computing path
-PATH NOT COMPUTED
-** End of MazeRunner
+elzaria@ahmeds A3-MazeRunner % mvn -q clean package 
 ```
 
 ### Delivered version
 
 #### Command line arguments
 
-The delivered program at the end of this assignment should use the following flags:
+The delivered program uses the following flags:
 
 - `-i MAZE_FILE`: specifies the filename to be used;
 - `-p PATH_SEQUENCE`: activates the path verification mode to validate that PATH_SEQUENCE is correct for the maze
-
-If you are also delivering the bonus, your program will react to a third flag:
-
-- `-method {tremaux, righthand}`: specifies which path computation method to use. (default is right hand)
+- `-method {tremaux, righthand, dfs}`: computes the path to a maze via the PATH_ALGORITHM specified
+- `-baseline {tremaux, righthand, dfs}`: specifies the path computation algorithm to compare with
 
 #### Examples
 
-When no logs are activated, the programs only print the computed path on the standard output.
+If no -method flag is passed, the default path computation algorithm is `righthand`.
 
 ```
-mosser@azrael A1-Template % java -jar target/mazerunner.jar -i ./examples/straight.maz.txt
+elzaria@ahmeds A3-MazeRunner % java -jar target/mazerunner.jar -i ./examples/straight.maz.txt
 4F
-mosser@azrael A1-Template %
+```
+If a `-method` flag is passed, the path will be computed via the specified path computation algorithm. `dfs` provides the shortest path on any input perfect maze.
+
+```
+elzaria@ahmeds A3-MazeRunner % java -jar target/mazerunner.jar -i ./examples/medium.maz.txt -method dfs
+F L 2F R 2F L 18F L 2F R 2F R 8F R 2F L 6F R 10F L 4F R 10F L 10F R 4F L F
 ```
 
 If a given path is correct, the program prints the message `correct path` on the standard output.
 
 ```
-mosser@azrael A1-Template % java -jar target/mazerunner.jar -i ./examples/straight.maz.txt -p 4F
+elzaria@ahmeds A3-MazeRunner % java -jar target/mazerunner.jar -i ./examples/straight.maz.txt -p 4F
 correct path
-mosser@azrael A1-Template %
 ```
 
 If a given path is incorrect, the program prints the message `incorrect path` on the standard output.
 
 ```
-mosser@azrael A1-Template % java -jar target/mazerunner.jar -i ./examples/straight.maz.txt -p 3F
-inccorrect path
-mosser@azrael A1-Template %
+elzaria@ahmeds A3-MazeRunner % java -jar target/mazerunner.jar -i ./examples/straight.maz.txt -p 3F
+incorrect path
+```
+
+To compare algorithms, specify a `-method` flag path computation algorithm to compare to the algorithm specified by the `-baseline` flag.
+
+```
+elzaria@ahmeds A3-MazeRunner % java -jar target/mazerunner.jar -i ./examples/giant.maz.txt -method tremaux -baseline dfs
+Time taken to generate maze: 0.9ms
+Time taken to compute maze via tremaux: 5.4ms
+Time taken to compute maze via dfs: 2.2ms
+Speedup: 1.0
 ```
 
