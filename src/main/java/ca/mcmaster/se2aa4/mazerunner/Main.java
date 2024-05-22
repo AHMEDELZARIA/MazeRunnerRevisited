@@ -6,6 +6,7 @@ import ca.mcmaster.se2aa4.mazerunner.SolvingMaze.DfsSolver;
 import ca.mcmaster.se2aa4.mazerunner.SolvingMaze.MazeSolver;
 import ca.mcmaster.se2aa4.mazerunner.SolvingMaze.RightHandSolver;
 import ca.mcmaster.se2aa4.mazerunner.SolvingMaze.TremauxSolver;
+import ca.mcmaster.se2aa4.mazerunner.SolvingMaze.BfsSolver;
 import org.apache.commons.cli.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -103,6 +104,10 @@ public class Main {
             case "dfs" -> {
                 logger.debug("dfs algorithm chosen.");
                 solver = new DfsSolver();
+            }
+            case "bfs" -> {
+                logger.debug("bfs algorithm chosen.");
+                solver = new BfsSolver();
             }
             default -> {
                 throw new Exception("Maze solving method '" + method + "' not supported.");
