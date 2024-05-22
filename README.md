@@ -1,4 +1,4 @@
-# Assignment A3 - Maze Runner Take 2
+# Maze Runner Take 2
 
 * **Student**: [Ahmed Elzaria](elzariaa@mcmaster.ca)
   * Author: Alexandre Lachance
