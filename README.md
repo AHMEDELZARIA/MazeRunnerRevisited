@@ -56,8 +56,8 @@ The delivered program uses the following flags:
 
 - `-i MAZE_FILE`: specifies the filename to be used;
 - `-p PATH_SEQUENCE`: activates the path verification mode to validate that PATH_SEQUENCE is correct for the maze
-- `-method {tremaux, righthand, dfs}`: computes the path to a maze via the PATH_ALGORITHM specified
-- `-baseline {tremaux, righthand, dfs}`: specifies the path computation algorithm to compare with
+- `-method {tremaux, righthand, dfs, and bfs}`: computes the path to a maze via the PATH_ALGORITHM specified
+- `-baseline {tremaux, righthand, dfs, and bfs}`: specifies the path computation algorithm to compare with
 
 #### Examples
 
