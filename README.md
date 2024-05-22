@@ -7,6 +7,12 @@
 * **Course Title**: Software Design I - Introduction to Software Development
 * Term: *Level II - Winter 2024*
 
+## 👨🏽‍💻 Development Process
+
+The complete Agile software development life cycle was followed for this project. This meant an incremental and iterative approach for gradual release of value. From gathering requirements, to brainstorming, to designing a walking skeleton, developing an MVP, gathering feedback from experienced individuals in the field, to testing, and deployment. This is the result of 2 months of iterative and incremental development.
+
+**Software Engineering techniques such as SOLID principles, GRASP patterns, GoF Design Patterns, Object Oriented Design, Encapsulation, Information Hiding, Unit Testing, Deployment, Favouring Composition over Inheritance, Project Management through GitHub Projects, Effective Version Control, and more were used and prioritized throughout the development of this product.**
+
 ## Business Logic Specification
 
 This program explores a maze, finding a path from an entry point to an exit one.
